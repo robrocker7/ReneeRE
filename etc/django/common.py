@@ -1,4 +1,4 @@
-
+import settings
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -176,7 +176,7 @@ DATABASES = {
 import os
 
 # Name of the directory for the project.
-PROJECT_DIRNAME = PROJECT_ROOT.split(os.sep)[-1]
+PROJECT_DIRNAME = settings.PROJECT_ROOT.split(os.sep)[-1]
 print PROJECT_DIRNAME
 
 # Every cache key will get prefixed with this value - here we set it to
@@ -192,7 +192,7 @@ STATIC_URL = "/static/"
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'src', STATIC_URL.strip("/"))
+STATIC_ROOT = os.path.join(settings.PROJECT_ROOT, 'src', STATIC_URL.strip("/"))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -201,7 +201,7 @@ MEDIA_URL = STATIC_URL + "media/"
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'src', *MEDIA_URL.strip("/").split("/"))
+MEDIA_ROOT = os.path.join(settings.PROJECT_ROOT, 'src', *MEDIA_URL.strip("/").split("/"))
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -216,7 +216,7 @@ ROOT_URLCONF = 'src.urls'
 # or "C:/www/django/templates".
 # Always use forward slashes, even on Windows.
 # Don't forget to use absolute paths, not relative paths.
-TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'src', "templates"),)
+TEMPLATE_DIRS = (os.path.join(settings.PROJECT_ROOT, 'src', "templates"),)
 
 
 ################
@@ -224,6 +224,8 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'src', "templates"),)
 ################
 
 INSTALLED_APPS = (
+    # THEMES
+    'themes.realestate',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

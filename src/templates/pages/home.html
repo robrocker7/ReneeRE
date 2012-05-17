@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body_id %}page1{% endblock %}
+
+{% block slider %}
+<div id="slider">
+    <img src="{{ STATIC_URL }}images/img1.jpg" alt="">
+    <img src="{{ STATIC_URL }}images/img2.jpg" alt="">
+    <img src="{{ STATIC_URL }}images/img3.jpg" alt="">
+    <img src="{{ STATIC_URL }}images/img4.jpg" alt="">
+    <img src="{{ STATIC_URL }}images/img5.jpg" alt="">
+</div>
+ 
+  <div id="header-box"> <img src="{{ STATIC_URL }}images/header-title.gif" alt="" />
+    <p>Duis aute irure dolor in reprehenderit voluptate velit esillum dolore eugiat nulla pariatur. Excepteur sintcecat cupidatat non proident, sunt in culpa qui officia uerunt mollit anim id est laborum.</p>
+    <a href="#">click here to learn more</a>
+    </div>
+{% endblock %}

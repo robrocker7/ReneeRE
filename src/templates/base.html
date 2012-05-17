@@ -1,0 +1,184 @@
+{% load pages_tags mezzanine_tags i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+
+{% if "mezzanine.blog"|is_installed %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url blog_post_feed "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url blog_post_feed "atom" %}">
+{% endif %}
+<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css">
+<!--[if lt IE 7]>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/ie_png.js"></script>
+  <script type="text/javascript">
+  ie_png.fix('.png, #arrow-left, #arrow-right');
+  </script>
+  <link href="{{ STATIC_URL }}css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+{% if "cartridge.shop"|is_installed %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/cartridge.css">
+{% endif %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/cufon-yui.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/Cooper_Lt_BT_400.font.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/cufon-replace.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+<script>
+$(function() {
+    $('.middleinput:text, textarea').addClass('xlarge');
+    $('.control-group label').addClass('control-label');
+});
+</script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+
+<div id="main-tail-top">
+  <div id="main-tail-bot">
+    <div id="main-bg">
+      <div id="main">
+        <!-- header --><div id="header"> <a href="index.html"><img src="{{ STATIC_URL }}images/logo.gif" id="logo" alt="" /></a>
+          <ul id="icons">
+            <li>Get Updates Via</li>
+            <li><a href="#"><img src="{{ STATIC_URL }}images/icon-1.gif" alt="" /></a></li>
+            <li><a href="#"><img src="{{ STATIC_URL }}images/icon-2.gif" alt="" /></a></li>
+            <li><a href="#"><img src="{{ STATIC_URL }}images/icon-3.gif" alt="" /></a></li>
+          </ul>
+          {% page_menu "pages/menus/primary.html" %}
+          {% block slider %}{% endblock %}
+        </div>
+        
+        <!-- content -->
+        <div id="content">
+          <div class="indent">
+            <div class="wrapper">
+            {% block main %}{% endblock %}
+            </div>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div id="footer">
+          <div class="inner">
+            <div class="wrapper">
+              {% comment %}
+              <p>Real Estate <span>&copy; 2011</span> : <a href="index-7.html">Privacy Policy</a></p>
+              {% endcomment %}
+              {% page_menu "pages/menus/footer_tree.html" %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %}
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container">
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+    {% if settings.SITE_TAGLINE %}<p class="tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+    <div class="nav-collapse">
+        <form action="{% url search %}" class="navbar-search pull-right">
+        <input class="search-query" placeholder="{% trans "Search" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
+        </form>
+        {% page_menu "pages/menus/dropdown.html" %}
+    </div>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" data-alert="alert">
+<a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+</div>
+{% endfor %}
+
+<h1>{% block title %}{% endblock %}</h1>
+
+<ul class="breadcrumb">
+{% spaceless %}
+{% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+{% endspaceless %}
+</ul>
+
+</div>
+
+<div class="container">
+<div class="row">
+
+<div class="span2 left">
+    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
+</div>
+
+<div class="span7 middle">
+    {% block main %}{% endblock %}
+</div>
+
+<div class="span3 right">
+    {% include "includes/user_panel.html" %}
+    <div class="panel">
+    {% block right_panel %}
+    {% ifinstalled mezzanine.twitter %}
+    {% include "twitter/tweets.html" %}
+    {% endifinstalled %}
+    {% endblock %}
+    </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+<div class="container">
+{% page_menu "pages/menus/footer.html" %}
+<br style="clear:both">
+<p>
+    {% trans "Powered by" %}
+    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
+    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
+    {% trans "and" %}
+    <a href="http://www.djangoproject.com">Django</a>
+    <span class="separator">|</span>
+    Theme by <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+    {% ifinstalled mezzanine.mobile %}
+    <span class="separator">|</span>
+    <a href="{% url set_device "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
+    {% endifinstalled %}
+</p>
+</div>
+</footer>
+{% endcomment %}
+{% include "includes/footer_scripts.html" %}
+
+</body>
+</html>
+
+
